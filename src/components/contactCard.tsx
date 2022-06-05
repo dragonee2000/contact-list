@@ -23,11 +23,12 @@ interface ContactProps {
   contact: Contact;
   onUpdate: (id: string) => void;
   onDelete: (id: string) => void;
+  onView: (contact: Contact) => void;
 }
 
 const ContactCard: React.FC<ContactProps> = (props) => {
-  const { contact, onUpdate, onDelete } = props;
-  const [hover, setHover] = useState(false)
+  const { contact, onUpdate, onDelete, onView } = props;
+  const [hover, setHover] = useState(false);
 
   const updateContact = (id: string) => {
     onUpdate(id);
@@ -35,14 +36,20 @@ const ContactCard: React.FC<ContactProps> = (props) => {
 
   const deleteContact = (id: string) => {
     onDelete(id);
-  }
+  };
 
   return (
-    <Card sx={{ m:2, borderRadius: "20px", width: "225px", height: "150px" }}
+    <Card
+      sx={{ m: 2, borderRadius: "20px", height: "150px" }}
       onMouseOver={() => setHover(true)}
       onMouseOut={() => setHover(false)}
+      aria-labelledby="contact card"
     >
-      <CardContent sx={{ height: "50%"}}>
+      <CardContent
+        onClick={() => onView(contact)}
+        sx={{ height: "50%" }}
+        aria-labelledby="contact card content"
+      >
         <Box
           sx={{
             display: "flex",
@@ -54,6 +61,7 @@ const ContactCard: React.FC<ContactProps> = (props) => {
             <Avatar
               first_name={contact.first_name}
               last_name={contact.last_name}
+              aria-labelledby="avatar for user"
             />
           </Box>
           <Box
@@ -69,11 +77,14 @@ const ContactCard: React.FC<ContactProps> = (props) => {
                 flexDirection: "row",
                 justifyContent: "flex-end",
               }}
+              aria-label="name content"
             >
               <Typography
                 sx={{ fontSize: 14, mr: 0.5 }}
                 color="text.secondary"
                 gutterBottom
+                aria-labelledby="first name"
+                aria-label={`${contact.first_name}`}
               >
                 {contact.first_name}
               </Typography>
@@ -81,6 +92,8 @@ const ContactCard: React.FC<ContactProps> = (props) => {
                 sx={{ fontSize: 14, fontWeight: "bold" }}
                 color="text.secondary"
                 gutterBottom
+                aria-labelledby="last name"
+                aria-label={`${contact.last_name}`}
               >
                 {contact.last_name}
               </Typography>
@@ -91,11 +104,14 @@ const ContactCard: React.FC<ContactProps> = (props) => {
                 flexDirection: "row",
                 justifyContent: "flex-end",
               }}
+              aria-label="phone number content"
             >
               <Typography
                 sx={{ fontSize: 14, mr: 0.5 }}
                 color="text.secondary"
                 gutterBottom
+                aria-labelledby="phone number"
+                aria-label={`${contact.phone_number}`}
               >
                 {contact.phone_number}
               </Typography>
@@ -103,12 +119,29 @@ const ContactCard: React.FC<ContactProps> = (props) => {
           </Box>
         </Box>
       </CardContent>
-      <CardActions sx={{ height: "50%", justifyContent: "flex-end", display: hover ? "flex" :"none"}}>
+      <CardActions
+        sx={{
+          height: "50%",
+          justifyContent: "flex-end",
+          display: hover ? "flex" : "none",
+        }}
+        aria-label="contact-card-action"
+      >
         <Stack direction="row" spacing={2}>
-          <IconButton color="primary" aria-label="edit-contact" onClick={() => updateContact(contact.id)}>
+          <IconButton
+            color="primary"
+            aria-label="edit-contact"
+            onClick={() => updateContact(contact.id)}
+            aria-labelledby="contact-card-action-edit"
+          >
             <EditIcon fontSize="inherit" />
           </IconButton>
-          <IconButton color="primary" aria-label="delete-contact" onClick={() => deleteContact(contact.id)}>
+          <IconButton
+            color="primary"
+            aria-label="delete-contact"
+            onClick={() => deleteContact(contact.id)}
+            aria-labelledby="contact-card-action-delete"
+          >
             <DeleteIcon fontSize="inherit" />
           </IconButton>
         </Stack>

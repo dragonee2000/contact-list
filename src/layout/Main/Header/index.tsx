@@ -23,13 +23,14 @@ const Header = () => {
         }}
       >
         <Box component="span" sx={{ flexGrow: 1 }}>
-          <LogoSection />
+          <LogoSection aria-label="logo"/>
         </Box>
         
       </Box>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
         <ButtonBase sx={{ borderRadius: "25px", overflow: "hidden", right: 1 }}>
           <Avatar
+          aria-label="profile icon"
             src={UserIcon}
             sx={{
               background: theme.palette.secondary.light,

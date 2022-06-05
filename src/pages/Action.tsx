@@ -21,9 +21,6 @@ import { Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 
 // assets
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
 
 export const customInput = {
   marginTop: 1,
@@ -84,9 +81,12 @@ const EditContactPage: React.FC = (props) => {
       <Box
         sx={{
           backgroundColor: "#fff",
-          width: "50vw",
           padding: 2,
           borderRadius: 2.5,
+          width: "50%",
+          [theme.breakpoints.down("md")]: {
+            width: "80%",
+          },
         }}
       >
         <Box sx={{ mb: 1 }}>
@@ -101,6 +101,7 @@ const EditContactPage: React.FC = (props) => {
               WebkitTextFillColor: "transparent",
               background: "-webkit-linear-gradient(360deg, #ff4c00, #FDA766)",
             }}
+            aria-labelledby={action === "create" ? "Create Contact" : "Edit Contact"}
           >
             {action === "create" ? "Create Contact" : "Edit Contact"}
           </Typography>
@@ -119,6 +120,8 @@ const EditContactPage: React.FC = (props) => {
               { setErrors, setStatus, setSubmitting }
             ) => {
               try {
+                values.first_name = values.first_name.trim();
+                values.last_name = values.last_name.trim();
                 if (action === "edit") {
                   dispatch(update(values))
                 }
@@ -128,7 +131,6 @@ const EditContactPage: React.FC = (props) => {
                 }
 
                 navigate('/');
-                console.log(values);
               } catch (err) {
                 console.log(err);
               }
@@ -151,8 +153,9 @@ const EditContactPage: React.FC = (props) => {
                         fullWidth
                         error={Boolean(touched.first_name && errors.first_name)}
                         sx={customInput}
+                        aria-label="First name input"
                       >
-                        <InputLabel htmlFor="outlined-adornment-first-name">
+                        <InputLabel htmlFor="outlined-adornment-first-name" aria-label="first name label">
                           First Name
                         </InputLabel>
                         <OutlinedInput
@@ -165,12 +168,15 @@ const EditContactPage: React.FC = (props) => {
                             setFirstName(e.target.value);
                           }}
                           label="First Name"
-                          inputProps={{}}
+                          inputProps={{
+                            "aria-label": "first name input"
+                          }}
                         />
                         {touched.first_name && errors.first_name && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-text-first-name"
+                            aria-label="standard-weight-helper-text-last-name"
                           >
                             {errors.first_name}
                           </FormHelperText>
@@ -183,7 +189,7 @@ const EditContactPage: React.FC = (props) => {
                         error={Boolean(touched.last_name && errors.last_name)}
                         sx={customInput}
                       >
-                        <InputLabel htmlFor="outlined-adornment-last-name">
+                        <InputLabel htmlFor="outlined-adornment-last-name" aria-label="last name label">
                           Last Name
                         </InputLabel>
                         <OutlinedInput
@@ -197,13 +203,14 @@ const EditContactPage: React.FC = (props) => {
                           }}
                           label="Last Name"
                           inputProps={{
-                            "aria-label": "last name",
+                            "aria-label": "last name input",
                           }}
                         />
                         {touched.last_name && errors.last_name && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-text-last-name"
+                            aria-label="standard-weight-helper-text-last-name"
                           >
                             {errors.last_name}
                           </FormHelperText>
@@ -218,7 +225,7 @@ const EditContactPage: React.FC = (props) => {
                         error={Boolean(touched.email && errors.email)}
                         sx={customInput}
                       >
-                        <InputLabel htmlFor="outlined-adornment-email">
+                        <InputLabel htmlFor="outlined-adornment-email" aria-label="email label">
                           Email
                         </InputLabel>
                         <OutlinedInput
@@ -228,7 +235,7 @@ const EditContactPage: React.FC = (props) => {
                           onBlur={handleBlur}
                           onChange={(e) => {
                             handleChange(e);
-                            setEmail(e.target.value);
+                            setEmail(e.target.value.trim());
                           }}
                           label="Email"
                           inputProps={{
@@ -253,7 +260,7 @@ const EditContactPage: React.FC = (props) => {
                         )}
                         sx={customInput}
                       >
-                        <InputLabel htmlFor="outlined-adornment-phone-number">
+                        <InputLabel htmlFor="outlined-adornment-phone-number" aria-label="phone number label">
                           Phone Number
                         </InputLabel>
                         <OutlinedInput
@@ -265,7 +272,7 @@ const EditContactPage: React.FC = (props) => {
                           onBlur={handleBlur}
                           onChange={(e) => {
                             handleChange(e);
-                            setPhoneNumber(e.target.value);
+                            setPhoneNumber(e.target.value.trim());
                           }}
                           label="Phone Number"
                           inputProps={{
@@ -294,6 +301,7 @@ const EditContactPage: React.FC = (props) => {
                         backgroundColor: "#ffab91",
                       }}
                       type="submit"
+                      aria-label={`${action === "create" ? "Create" : "Update"} button`}
                     >
                       {action === "create" ? "Create" : "Update"}
                     </Button>

@@ -25,10 +25,13 @@ c. Phone number
 a. Edit an existing contact
 i. All fields are editable
 ii. Create a separate page for editing
+
 b. View a contact
 i. Expand a contact to view all information
+
 c. Delete an existing user
 i. A simple delete with a confirmation popup. Are you sure you want to delete “Contact”?
+
 d. Create a new contact
 i. Create a separate page for creating
  
