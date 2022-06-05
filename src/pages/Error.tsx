@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 
 const ErrorPage = () => {
     return (
-        <Box>
+        <Box aria-label="Page not found">
             <Typography>Page Not Found</Typography>
         </Box>
     )
