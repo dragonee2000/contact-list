@@ -21,9 +21,6 @@ import { Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 
 // assets
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
 
 export const customInput = {
   marginTop: 1,
@@ -84,9 +81,12 @@ const EditContactPage: React.FC = (props) => {
       <Box
         sx={{
           backgroundColor: "#fff",
-          width: "50vw",
           padding: 2,
           borderRadius: 2.5,
+          width: "50%",
+          [theme.breakpoints.down("md")]: {
+            width: "80%",
+          },
         }}
       >
         <Box sx={{ mb: 1 }}>
@@ -119,6 +119,8 @@ const EditContactPage: React.FC = (props) => {
               { setErrors, setStatus, setSubmitting }
             ) => {
               try {
+                values.first_name = values.first_name.trim();
+                values.last_name = values.last_name.trim();
                 if (action === "edit") {
                   dispatch(update(values))
                 }
@@ -128,7 +130,6 @@ const EditContactPage: React.FC = (props) => {
                 }
 
                 navigate('/');
-                console.log(values);
               } catch (err) {
                 console.log(err);
               }
@@ -228,7 +229,7 @@ const EditContactPage: React.FC = (props) => {
                           onBlur={handleBlur}
                           onChange={(e) => {
                             handleChange(e);
-                            setEmail(e.target.value);
+                            setEmail(e.target.value.trim());
                           }}
                           label="Email"
                           inputProps={{
@@ -265,7 +266,7 @@ const EditContactPage: React.FC = (props) => {
                           onBlur={handleBlur}
                           onChange={(e) => {
                             handleChange(e);
-                            setPhoneNumber(e.target.value);
+                            setPhoneNumber(e.target.value.trim());
                           }}
                           label="Phone Number"
                           inputProps={{

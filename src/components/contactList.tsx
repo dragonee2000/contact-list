@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
 // MUI imports
+import { useTheme } from "@mui/material/styles"
 import { Grid } from "@mui/material";
 
 // project imports
@@ -15,6 +16,8 @@ interface ContactProps {
 }
 
 const ContactList: React.FC<ContactProps> = ({ contacts }) => {
+  const theme = useTheme();
+
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -28,14 +31,28 @@ const ContactList: React.FC<ContactProps> = ({ contacts }) => {
 
 
   return (
-    <Grid container display="flex"  >
+    <Grid container>
       {contacts &&
         contacts.map((contact) => (
+          <Grid item sx={{ [theme.breakpoints.down("sm")]: {
+            width: "100%",
+         },
+          [theme.breakpoints.only("sm")]: {
+            minWidth: "50%",
+          },
+          [theme.breakpoints.only("md")]: {
+            minWidth: "32.5%",
+         },
+         [theme.breakpoints.up("md")]: {
+          minWidth: "25%",
+       },
+    }}>
           <ContactCard 
           key={contact.id} 
           onUpdate={handleUpdate}
           onDelete={handleDelete}
           contact={contact} />
+          </Grid>
         ))}
     </Grid>
   );

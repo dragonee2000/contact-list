@@ -34,7 +34,11 @@ const ContactListPage: React.FC = (props) => {
 
   useEffect(() => {
     const data = getContactData.filter((item) =>
-      item.first_name.toLowerCase().includes(search)
+      parseInt(search)
+        ? item.phone_number.toLowerCase().includes(search)
+        : item.first_name.toLowerCase().includes(search) ||
+          item.last_name.toLowerCase().includes(search) ||
+          item.email.toLowerCase().includes(search)
     );
     setContactData(data);
   }, [getContactData, search]);
@@ -122,7 +126,6 @@ const ContactListPage: React.FC = (props) => {
           sx={{
             display: "flex",
             height: "90vh",
-            justifyContent: "center",
           }}
         >
           <ContactList contacts={contactData} />

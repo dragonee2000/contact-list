@@ -27,7 +27,7 @@ interface ContactProps {
 
 const ContactCard: React.FC<ContactProps> = (props) => {
   const { contact, onUpdate, onDelete } = props;
-  const [hover, setHover] = useState(false)
+  const [hover, setHover] = useState(false);
 
   const updateContact = (id: string) => {
     onUpdate(id);
@@ -35,14 +35,16 @@ const ContactCard: React.FC<ContactProps> = (props) => {
 
   const deleteContact = (id: string) => {
     onDelete(id);
-  }
+  };
 
   return (
-    <Card sx={{ m:2, borderRadius: "20px", width: "225px", height: "150px" }}
+    <Card
+      sx={{ m: 2, borderRadius: "20px",
+      height: "150px" }}
       onMouseOver={() => setHover(true)}
       onMouseOut={() => setHover(false)}
     >
-      <CardContent sx={{ height: "50%"}}>
+      <CardContent sx={{ height: "50%" }}>
         <Box
           sx={{
             display: "flex",
@@ -103,12 +105,26 @@ const ContactCard: React.FC<ContactProps> = (props) => {
           </Box>
         </Box>
       </CardContent>
-      <CardActions sx={{ height: "50%", justifyContent: "flex-end", display: hover ? "flex" :"none"}}>
+      <CardActions
+        sx={{
+          height: "50%",
+          justifyContent: "flex-end",
+          display: hover ? "flex" : "none",
+        }}
+      >
         <Stack direction="row" spacing={2}>
-          <IconButton color="primary" aria-label="edit-contact" onClick={() => updateContact(contact.id)}>
+          <IconButton
+            color="primary"
+            aria-label="edit-contact"
+            onClick={() => updateContact(contact.id)}
+          >
             <EditIcon fontSize="inherit" />
           </IconButton>
-          <IconButton color="primary" aria-label="delete-contact" onClick={() => deleteContact(contact.id)}>
+          <IconButton
+            color="primary"
+            aria-label="delete-contact"
+            onClick={() => deleteContact(contact.id)}
+          >
             <DeleteIcon fontSize="inherit" />
           </IconButton>
         </Stack>
