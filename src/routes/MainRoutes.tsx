@@ -4,13 +4,29 @@ import { lazy } from 'react';
 import MainLayout from 'layout/Main';
 import Loadable from 'helper/loadable';
 
+// routes
+const ContactListPage = Loadable(lazy(() => import('pages/Contact')));
+const CreateContactPage = Loadable(lazy(() => import('pages/Create')));
+const ActionContactPage = Loadable(lazy(() => import('pages/Action')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
     path: '/',
     element: <MainLayout />,
     children: [
-
+        {
+            path: '',
+            element: <ContactListPage />
+        },
+        {
+            path: '/:action',
+            element: <ActionContactPage />
+        },
+        {
+            path: '/:action/:id',
+            element: <ActionContactPage />
+        }
     ]
 }
 
