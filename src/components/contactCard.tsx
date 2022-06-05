@@ -23,10 +23,11 @@ interface ContactProps {
   contact: Contact;
   onUpdate: (id: string) => void;
   onDelete: (id: string) => void;
+  onView: (contact: Contact) => void;
 }
 
 const ContactCard: React.FC<ContactProps> = (props) => {
-  const { contact, onUpdate, onDelete } = props;
+  const { contact, onUpdate, onDelete, onView } = props;
   const [hover, setHover] = useState(false);
 
   const updateContact = (id: string) => {
@@ -39,13 +40,16 @@ const ContactCard: React.FC<ContactProps> = (props) => {
 
   return (
     <Card
-      sx={{ m: 2, borderRadius: "20px",
-      height: "150px" }}
+      sx={{ m: 2, borderRadius: "20px", height: "150px" }}
       onMouseOver={() => setHover(true)}
       onMouseOut={() => setHover(false)}
       aria-labelledby="contact card"
     >
-      <CardContent sx={{ height: "50%" }} aria-labelledby="contact card content">
+      <CardContent
+        onClick={() => onView(contact)}
+        sx={{ height: "50%" }}
+        aria-labelledby="contact card content"
+      >
         <Box
           sx={{
             display: "flex",

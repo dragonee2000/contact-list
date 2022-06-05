@@ -158,7 +158,6 @@ const ContactList: React.FC<ContactProps> = ({ contacts, setOpen, setId }) => {
           contacts.map((contact) => (
             <Grid
               item
-              onClick={() => handleOpenModal(contact)}
               sx={{
                 [theme.breakpoints.down("sm")]: {
                   width: "100%",
@@ -178,6 +177,7 @@ const ContactList: React.FC<ContactProps> = ({ contacts, setOpen, setId }) => {
                 key={contact.id}
                 onUpdate={handleUpdate}
                 onDelete={handleDelete}
+                onView={handleOpenModal}
                 contact={contact}
               />
             </Grid>
