@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 // MUI imports
 import { useTheme } from "@mui/material/styles";
 import {
+  Alert,
+  AlertTitle,
+  Collapse,
   Box,
   Button,
   FormControl,
@@ -11,6 +14,7 @@ import {
   IconButton,
   InputLabel,
   OutlinedInput,
+  Stack,
 } from "@mui/material";
 
 // project imports
@@ -20,17 +24,35 @@ import Contact from "models/Contact";
 import ContactList from "components/contactList";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { customInput } from "./Action";
+import { useAppDispatch } from "helper/hooks";
+import { destroy } from "features/contact/contactSlice";
 
 // assets
+import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
+const BUTTON_STYLE = {
+  color: "#fbe9e7",
+  borderRadius: "15px",
+  backgroundColor: "#ffab91",
+  mr: 1,
+  "&:hover": {
+    backgroundColor: "#fbe9e7",
+    color: "#ffab91",
+  }
+}
+
 const ContactListPage: React.FC = (props) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
   const getContactData = useAppSelector(selectContactList);
   const [contactData, setContactData] = useState<Contact[]>();
   const [search, setSearch] = useState<string>("");
+
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
 
   useEffect(() => {
     const data = getContactData.filter((item) =>
@@ -59,17 +81,17 @@ const ContactListPage: React.FC = (props) => {
       >
         <Grid item xl={11} lg={11} md={11} xs={12}>
           <FormControl fullWidth sx={customInput}>
-            <InputLabel htmlFor="outlined-adornment-email">Search</InputLabel>
+            <InputLabel htmlFor="search">Search</InputLabel>
             <OutlinedInput
-              id="outlined-adornment-email"
+              id="search"
               value={search}
-              name="email"
+              name="search"
               onChange={(e) => {
                 setSearch(e.target.value);
               }}
-              label="Email"
+              label="search"
               inputProps={{
-                "aria-label": "email",
+                "aria-label": "search",
               }}
             />
           </FormControl>
@@ -121,6 +143,48 @@ const ContactListPage: React.FC = (props) => {
           </FormControl>
         </Grid>
       </Grid>
+      <Collapse in={open}>
+        <Alert
+          variant="filled"
+          severity={"error"}
+          action={
+            <Stack direction="row">
+              <Button
+                aria-label="confirm-delete"
+                disableElevation
+                variant={"contained"}
+                size="large"
+                sx={BUTTON_STYLE}
+                onClick={() => {
+                  setOpen(false);
+                  dispatch(destroy({ id }));
+                  setId("");
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                aria-label="not-confirm-delete"
+                disableElevation
+                variant={"contained"}
+                size="large"
+                sx={BUTTON_STYLE}
+                onClick={() => {
+                  setOpen(false);
+                  setId("");
+                }}
+              >
+                No
+              </Button>
+            </Stack>
+          }
+          sx={{ mb: 2 }}
+        >
+          <AlertTitle>Confirmation</AlertTitle>
+          {/* {hasErrors && Object.keys(err).map(key => `${key}\n`)} */}
+          Are you sure you want to delete?
+        </Alert>
+      </Collapse>
       <PerfectScrollbar>
         <Box
           sx={{
@@ -128,7 +192,11 @@ const ContactListPage: React.FC = (props) => {
             height: "90vh",
           }}
         >
-          <ContactList contacts={contactData} />
+          <ContactList
+            contacts={contactData}
+            setOpen={(open) => setOpen(open)}
+            setId={(id) => setId(id)}
+          />
         </Box>
       </PerfectScrollbar>
     </Box>
