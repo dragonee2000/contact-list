@@ -6,7 +6,6 @@ import Loadable from 'helper/loadable';
 
 // routes
 const ContactListPage = Loadable(lazy(() => import('pages/Contact')));
-const CreateContactPage = Loadable(lazy(() => import('pages/Create')));
 const ActionContactPage = Loadable(lazy(() => import('pages/Action')));
 
 // ==============================|| MAIN ROUTING ||============================== //

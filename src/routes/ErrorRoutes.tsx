@@ -5,7 +5,7 @@ import Loadable from "helper/loadable";
 import Minimal from 'layout/Minimal';
 
 // lazy loading
-const NotFoundPage = Loadable(lazy(() => import('features/error')));
+const NotFoundPage = Loadable(lazy(() => import('pages/Error')));
 
 // ==============================|| ERROR ROUTING ||============================== //
 

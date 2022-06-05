@@ -6,40 +6,52 @@ import {
   Card,
   CardActions,
   CardContent,
+  IconButton,
+  Stack,
   Typography,
-  Button,
 } from "@mui/material";
 
 // project imports
 import Contact from "models/Contact";
 import Avatar from "./nameAvatar";
 
+// assets
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 interface ContactProps {
   contact: Contact;
   onUpdate: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 const ContactCard: React.FC<ContactProps> = (props) => {
-  const { contact, onUpdate } = props;
+  const { contact, onUpdate, onDelete } = props;
 
   const updateContact = (id: string) => {
     onUpdate(id);
   };
 
+  const deleteContact = (id: string) => {
+    onDelete(id);
+  }
+
   return (
-    <Card sx={{ borderRadius: "20px", width: "225px", height: "150px" }}>
-      <CardContent>
+    <Card sx={{ m:2, borderRadius: "20px", width: "225px", height: "150px" }}>
+      <CardContent sx={{ height: "50%"}}>
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between"
-            
+            justifyContent: "space-between",
           }}
         >
-            <Box sx={{ display: "flex"}}>
-                <Avatar first_name={contact.first_name} last_name={contact.last_name} />
-            </Box>
+          <Box sx={{ display: "flex" }}>
+            <Avatar
+              first_name={contact.first_name}
+              last_name={contact.last_name}
+            />
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -47,7 +59,13 @@ const ContactCard: React.FC<ContactProps> = (props) => {
               justifyContent: "center",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
               <Typography
                 sx={{ fontSize: 14, mr: 0.5 }}
                 color="text.secondary"
@@ -63,7 +81,13 @@ const ContactCard: React.FC<ContactProps> = (props) => {
                 {contact.last_name}
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
               <Typography
                 sx={{ fontSize: 14, mr: 0.5 }}
                 color="text.secondary"
@@ -75,6 +99,16 @@ const ContactCard: React.FC<ContactProps> = (props) => {
           </Box>
         </Box>
       </CardContent>
+      <CardActions sx={{ height: "50%", justifyContent: "flex-end"}}>
+        <Stack direction="row" spacing={2}>
+          <IconButton color="primary" aria-label="edit-contact" onClick={() => updateContact(contact.id)}>
+            <EditIcon fontSize="inherit" />
+          </IconButton>
+          <IconButton color="primary" aria-label="delete-contact" onClick={() => deleteContact(contact.id)}>
+            <DeleteIcon fontSize="inherit" />
+          </IconButton>
+        </Stack>
+      </CardActions>
     </Card>
   );
 };
