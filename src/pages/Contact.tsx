@@ -83,12 +83,15 @@ const ContactListPage: React.FC = (props) => {
           }}
         >
           <IconButton
+            size="large"
             sx={{
               [theme.breakpoints.down("md")]: { display: "none" },
-              backgroundColor: "ButtonText",
+              backgroundColor: "#6b0f1a",
+              backgroundImage:
+                "linear-gradient(315deg, #6b0f1a 0%, #b91372 74%)",
+              color: "#fff",
               ml: 2,
             }}
-            color="primary"
             aria-label="edit-contact"
             onClick={() => navigate("/create")}
           >
@@ -103,7 +106,9 @@ const ContactListPage: React.FC = (props) => {
                 [theme.breakpoints.up("md")]: { display: "none" },
                 color: "#fbe9e7",
                 borderRadius: "10px",
-                backgroundColor: "#ffab91",
+                backgroundColor: "#6b0f1a",
+                backgroundImage:
+                  "linear-gradient(315deg, #6b0f1a 0%, #b91372 74%)",
               }}
               onClick={() => navigate("/create")}
             >

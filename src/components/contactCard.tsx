@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // MUI imports
 import {
@@ -27,6 +27,7 @@ interface ContactProps {
 
 const ContactCard: React.FC<ContactProps> = (props) => {
   const { contact, onUpdate, onDelete } = props;
+  const [hover, setHover] = useState(false)
 
   const updateContact = (id: string) => {
     onUpdate(id);
@@ -37,7 +38,10 @@ const ContactCard: React.FC<ContactProps> = (props) => {
   }
 
   return (
-    <Card sx={{ m:2, borderRadius: "20px", width: "225px", height: "150px" }}>
+    <Card sx={{ m:2, borderRadius: "20px", width: "225px", height: "150px" }}
+      onMouseOver={() => setHover(true)}
+      onMouseOut={() => setHover(false)}
+    >
       <CardContent sx={{ height: "50%"}}>
         <Box
           sx={{
@@ -99,7 +103,7 @@ const ContactCard: React.FC<ContactProps> = (props) => {
           </Box>
         </Box>
       </CardContent>
-      <CardActions sx={{ height: "50%", justifyContent: "flex-end"}}>
+      <CardActions sx={{ height: "50%", justifyContent: "flex-end", display: hover ? "flex" :"none"}}>
         <Stack direction="row" spacing={2}>
           <IconButton color="primary" aria-label="edit-contact" onClick={() => updateContact(contact.id)}>
             <EditIcon fontSize="inherit" />
